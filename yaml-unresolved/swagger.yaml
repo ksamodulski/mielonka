@@ -1,0 +1,151 @@
+swagger: '2.0'
+info:
+  description: This is a dog mielonka API
+  version: 1.2.0
+  title: Dog treats API
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: Treats Management 
+  description: Secured Admin-only calls
+
+paths:
+  /treats:
+    get:
+      tags:
+      - Treats Management
+      summary: searches for treats
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available treats
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: name
+        description: search by treat name
+        required: true
+        type: string
+      - in: query
+        name: skip
+        description: number of records to skip for pagination
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/treatItem'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - Treats Management
+      summary: adds treats item
+      operationId: addTreats
+      description: Adds a treat to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: treatItemAddRequest
+        description: Treat item to add
+        schema:
+          $ref: '#/definitions/treatItemAddRequest'
+      responses:
+        201:
+          description: item created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/treatItem'
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+          
+    delete:
+      tags:
+      - Treats Management
+      summary: removes treats item
+      operationId: deleteTreat
+      description: Delete a treat from the system
+      parameters:
+        - in: query
+          name: id
+          description: delete by id
+          required: false
+          type: string
+      responses:
+        200:
+          description: item deleted
+        400:
+          description: invalid input, object invalid
+        404:
+          description: item not found    
+          
+definitions:
+  treatItem:
+    type: object
+    required:
+    - id
+    - name
+    - manufacturer
+    properties:
+      id:
+        type: integer
+        example: "1234"
+      name:
+        type: string
+        example: Mielonka
+      manufacturer:
+        type: string
+        example: Dolina Noteci
+
+  treatItemAddRequest:
+    type: object
+    required:
+    - name
+    - manufacturer
+    properties:
+      name:
+        type: string
+        example: Ucho
+      manufacturer:
+        type: string
+        example: Smacz-pol
+        
+  treatItemRemoveRequest:
+    type: object
+    required:
+    - id
+    properties:
+      id:
+        type: integer
+        example: "1234"
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /test-ksa/test-ksa/1.0.0
+schemes:
+ - https
