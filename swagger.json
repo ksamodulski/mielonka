@@ -98,16 +98,13 @@
         "tags" : [ "Treats Management" ],
         "summary" : "removes treats item",
         "operationId" : "deleteTreat",
-        "description" : "Adds a treat to the system",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
+        "description" : "Delete a treat from the system",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "treatItemRemoveRequest",
-          "description" : "Treat item to remove",
-          "schema" : {
-            "$ref" : "#/definitions/treatItemRemoveRequest"
-          }
+          "in" : "query",
+          "name" : "id",
+          "description" : "delete by id",
+          "required" : false,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
