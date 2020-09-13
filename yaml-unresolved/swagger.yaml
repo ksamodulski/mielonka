@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: This is a dog mielonka API
+  description: This is a dog mielonka API Pro
   version: 1.2.0
   title: Dog treats API
 
