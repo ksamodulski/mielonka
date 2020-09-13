@@ -1,6 +1,14 @@
 swagger: '2.0'
 info:
-  description: This is a dog mielonka API Pro
+  description: | 
+   # This is a dog treats API Pro Edition
+   ## Currently supported
+   | Brand | Product |
+    | ------- | --------|
+    | Smacz-pol   | Ucho zajęcze   |
+    | Dolina Noteci   | Mielonka   |
+   
+   ![Piesol](https://zamerdani.pl/wp-content/uploads/2020/07/DSC0468.jpg)
   version: 1.2.0
   title: Dog treats API
 
