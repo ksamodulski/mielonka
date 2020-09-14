@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: | 
-   # This is a dog treats API Pro Edition
+   # This is a dog treats API Pro 2.0
    ## Currently supported
    | Brand | Product |
     | ------- | --------|
