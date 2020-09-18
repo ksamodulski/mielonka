@@ -44,6 +44,9 @@ paths:
       operationId: listProducts
       tags:
         - Product Management
+      parameters: 
+        - $ref: "#/components/parameters/requestIdHeader"
+        - $ref: "#/components/parameters/authorizationHeader"
       responses:
         '200':
           description: A paged array of products
@@ -118,6 +121,24 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
+  parameters:
+    authorizationHeader:    
+      name: Authorization
+      in: header
+      description: OAuth2 Access Token
+      required: true
+      example: Bearer edKKACtPAb7zGlwSzvs72PvhAbGmB8K1ZrGxpcNM
+      schema:
+            type: string
+    requestIdHeader:    
+      name: X-REQUEST-ID
+      in: header
+      description: Unique request identifier
+      required: true
+      example: a6aa32cc-f9ce-11ea-adc1-0242ac120002
+      schema:
+            type: string
+            format: uuid
   schemas:
     Product:
       type: object
