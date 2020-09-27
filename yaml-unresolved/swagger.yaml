@@ -2,37 +2,25 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Drugstore API
-  description: '
-  # Introduction
-  
-  Welcome to the Drugstore API v 1.0.0
-  
-  This API currently supports retrieving products (with details) and adding new products to our DB.
-  
-  # Authentication
-  
-  This API is protected with OAuth OIDC authentication protocol.
-  In order to use this API commercially please register with our Authorization Server (@...) to obtain your cliend_id and secret.
-  You will be then able to get an access token to call the API with.
-  The process overview is shown at the diagram below.
-  
-  
-  ![Sample OIDC sequence diagram](https://d33wubrfki0l68.cloudfront.net/3ad9fa733a0ced7c349230beaf1e481560aa6065/602fe/assets-jekyll/blog/client-creds-with-spring-boot/client-creds-jwt-90615dab46fe5a23d5bca2a29ec42e518683860826b70840fa2a6cea62108440.png)
-  
+  description: |-
+    # Introduction
+    Welcome to the **Drugstore API v 1.0.0**
 
-  For further details please refer to the OAuth 2.0 RFC (Client Credentials Grant section).
-  
-  
-  [OAuth2 RFC - Client Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.4)
-  
-  # Example responses
-  
-  This API documentation is available together with a Swaggerhub Mock Server returning sample responses to respective endpoints.
-  Please note that the Mock server does not require an access token and is returning predefined, sample, static responses.
-  
-  The Mock Server address is available below.
+    This API currently supports retrieving products (with details) and adding new products to our DB.
 
-  '
+    # Authentication
+    This API is protected with OAuth OIDC authentication protocol. In order to use this API commercially please contact us to register with our Authorization Server and obtain your cliend_id and secret. You will be then able to get an access token to call the API with. The process overview is shown at the diagram below.
+
+    ![Sample OIDC sequence diagram](https://d33wubrfki0l68.cloudfront.net/3ad9fa733a0ced7c349230beaf1e481560aa6065/602fe/assets-jekyll/blog/client-creds-with-spring-boot/client-creds-jwt-90615dab46fe5a23d5bca2a29ec42e518683860826b70840fa2a6cea62108440.png)
+
+    For further details please refer to the OAuth 2.0 RFC (Client Credentials Grant section).
+
+    [OAuth2 RFC - Client Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.4)
+    # Example responses
+    This API documentation is available together with a Swaggerhub Mock Server returning sample responses to respective endpoints. Please note that the Mock server does not require an access token and is returning predefined, sample, static responses.
+    The Mock Server address is available below.
+  contact:
+    email: testksa@testksa.pl
   
 servers:
   # Added by API Auto Mocking Plugin
@@ -42,6 +30,7 @@ paths:
   /products:
     get:
       summary: Returns a list of all products
+      description: This resource returns an array of all available products and their basic attributes.
       operationId: listProducts
       tags:
         - Product Management
@@ -66,6 +55,15 @@ paths:
           $ref: '#/components/responses/401'
     post:
       summary: Adds a new product
+      description: 
+        This resource lets you add a new product to the DB. You can provide the product attributes.
+        The product id will be automatically generated and returned in the response body. 
+        Currently supported product categories are
+        
+          * OTC 
+          
+          * Prescription
+        
       operationId: createProduct
       tags:
         - Product Management
@@ -115,13 +113,27 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+              $ref: "#/components/schemas/Error"
+          examples:
+            MissingHeader:
+              value:
+                code: 'missing_request_id'
+                message: 'Error - missing request header: X-REQUEST-ID'
+            InvalidSchema:
+              value:
+                code: 'invalid_schema'
+                message: 'Error - invalid input json schema - missing field: name'
     401:
       description: Unauthorized
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
+          examples:
+            InvalidToken:
+              value:
+                code: 'invalid_token'
+                message: 'Error - access token is invalid / expired'
   parameters:
     authorizationHeader:    
       name: Authorization
@@ -146,12 +158,15 @@ components:
       required:
         - id
         - name
+        - category
       properties:
         id:
           type: integer
           format: int64
         name:
           type: string
+        category:
+          $ref: "#/components/schemas/ProductCategories"
         tag:
           type: string
     ProductDetails:
@@ -165,6 +180,8 @@ components:
           format: int64
         name:
           type: string
+        category:
+          $ref: "#/components/schemas/ProductCategories"
         tag:
           type: string
         description:
@@ -173,11 +190,19 @@ components:
       type: object
       required:
         - name
+        - category
       properties:
         name:
           type: string
+        category:
+          $ref: "#/components/schemas/ProductCategories"
         tag:
           type: string
+    ProductCategories:
+      type: string
+      enum: 
+        - 'OTC'
+        - 'Prescription'
     Products:
       type: array
       items:
@@ -189,7 +214,6 @@ components:
         - message
       properties:
         code:
-          type: integer
-          format: int32
+          type: string
         message:
           type: string
