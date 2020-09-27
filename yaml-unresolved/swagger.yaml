@@ -67,6 +67,9 @@ paths:
       operationId: createProduct
       tags:
         - Product Management
+      parameters: 
+        - $ref: "#/components/parameters/requestIdHeader"
+        - $ref: "#/components/parameters/authorizationHeader"
       requestBody:
         description: Product to be added
         required: true
@@ -88,6 +91,8 @@ paths:
       tags:
         - Product Management
       parameters:
+        - $ref: "#/components/parameters/requestIdHeader"
+        - $ref: "#/components/parameters/authorizationHeader"
         - name: productId
           in: path
           required: true
