@@ -16,16 +16,23 @@ info:
     For further details please refer to the OAuth 2.0 RFC (Client Credentials Grant section).
 
     [OAuth2 RFC - Client Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.4)
-    # Example responses
-    This API documentation is available together with a Swaggerhub Mock Server returning sample responses to respective endpoints. Please note that the Mock server does not require an access token and is returning predefined, sample, static responses.
-    The Mock Server address is available below.
+    # Mocks
+    This API documentation is available together with a Postman and Swaggerhub Mock Servers returning sample responses to respective endpoints. Please note that the mock servers do not require an access token and are returning predefined, sample, static responses.
+    
+    Please also our Postman Documentation at [Drugstore API 1.0.0 Postman Documentation](https://documenter.getpostman.com/view/422631/TVKHVFae#f6706706-da69-4649-80b2-de7ebf28ffd7)
+    
   contact:
+    name: " - do you need further support? Drop us a line!"
     email: testksa@testksa.pl
   
 servers:
   # Added by API Auto Mocking Plugin
+  - description: Postman Mock Server
+    url: https://8a8a7126-bbf8-4355-bdcc-3cfb5112e05e.mock.pstmn.io 
   - description: SwaggerHub API Sample Mock Server
     url: https://virtserver.swaggerhub.com/test-ksa/Drugstore/1.0.0
+  
+    
 paths:
   /products:
     get:
